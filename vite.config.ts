@@ -22,6 +22,6 @@ export default defineConfig({
   },
   build: {
     outDir: 'docs',
-    assetsDir: 'pz-page/pz-page'
+    assetsDir: 'pz-page/assets'
   }
 })
