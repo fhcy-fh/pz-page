@@ -20,7 +20,7 @@ export default defineConfig({
     port: 80,
     open: false
   },
-  base: '/pz-page/assets/',
+  base: '/pz-page/',
   build: {
     outDir: 'docs',
     assetsDir: 'assets'
