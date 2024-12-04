@@ -20,8 +20,9 @@ export default defineConfig({
     port: 80,
     open: false
   },
+  base: process.env.NODE_ENV === '/pz-page/assets/',
   build: {
     outDir: 'docs',
-    assetsDir: 'pz-page/assets'
+    assetsDir: 'assets'
   }
 })
