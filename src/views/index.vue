@@ -1,7 +1,19 @@
 <template>
   <div>
-    <van-nav-bar title="发财麻将" style="background-color: #F56C6C;" />
-    <RouterView></RouterView>
+    <van-nav-bar style="background-color: #F56C6C; color: #000">
+        <!-- <template #left>
+            <van-icon name="arrow-left" style="color: #fff;" size="5vw" />
+            <el-text style="color: #fff;" size="large">返回</el-text>
+        </template> -->
+        <template #title>
+            <el-text style="color: #fff;" size="large">麻将登记</el-text>
+        </template>
+    </van-nav-bar>
+    <RouterView v-slot="{ Component }">
+      <transition name="slide" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </RouterView>
     <van-tabbar v-model="active" active-color="#07c160" inactive-color="#000">
       <van-tabbar-item icon="cashier-o" @click="toHome">
         首页
@@ -38,4 +50,5 @@ const toSnacks = () => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

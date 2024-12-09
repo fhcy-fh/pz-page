@@ -3,17 +3,19 @@
     <van-collapse v-model="activeName" @change="change">
       <van-collapse-item :title="shop.shopName" :name="shop.shopCode" v-for="shop in shopList">
         <van-grid square column-num="3" :gutter='10'>
-          <van-grid-item @click="kk" v-for="room in shop.roomList">
+          <van-grid-item @click="toDetail(room)" v-for="room in shop.roomList">
               <van-icon :name="images_1" size="10vw" />
-              <b>1号房(空闲)</b>
+              <b>{{ room.roomName }}{{ room.usedName }}</b>
           </van-grid-item>
         </van-grid>
       </van-collapse-item>
     </van-collapse>
+    <RouterView></RouterView>
   </div>
 </template>
 
 <script setup lang="ts">
+import router from '@/router/indes';
 import { ref, onMounted } from 'vue';
 import images_1 from '@/assets/images/1.png'
 
@@ -77,8 +79,8 @@ const change = (e: any) => {
   console.log(activeName.value)
 }
 
-const kk = () => {
-  show.value = true
+const toDetail = (room: any) => {
+  router.push('/record/detail');
 }
 const close = () => {
   show.value = false
