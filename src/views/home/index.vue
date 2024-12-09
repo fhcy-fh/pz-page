@@ -1,73 +1,19 @@
 <template>
   <div>
-
-    <div style="margin: 2vw;">
-      <el-row :gutter="10">
-        <el-col :span="8">
-          <el-card class="card-container">
-            <div class="content">
-              <el-text>总营业额</el-text>
-              <el-text type="danger" size="large" tag="b">1021</el-text>
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card class="card-container">
-            <div class="content">
-              <el-text>本月营业额</el-text>
-              <el-text type="danger" size="large" tag="b">299</el-text>
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card class="card-container">
-            <div class="content">
-              <el-text>今日营业额</el-text>
-              <el-text type="danger" size="large" tag="b">9</el-text>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
-
-
-    <div style="margin: 2vw;">
-      <el-row :gutter="10">
-        <el-col :span="8">
-          <el-card class="card-container">
-            <div class="content">
-              <el-text>总单量</el-text>
-              <el-text type="primary" size="large" tag="b">1021</el-text>
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card class="card-container">
-            <div class="content">
-              <el-text>本月</el-text>
-              <el-text type="primary" size="large" tag="b">299</el-text>
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card class="card-container">
-            <div class="content">
-              <el-text>今日</el-text>
-              <el-text type="primary" size="large" tag="b">9</el-text>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
-
+    <bizTurnover></bizTurnover>
+    <bizCount></bizCount>
+    <bizSnacksTurnover></bizSnacksTurnover>
     <div style="margin-top: 10vw;">
-      <CustomBarChart :title="'7日单量'" :x="echartData.x" :y="echartData.y"></CustomBarChart>
+      <customBarChart :title="'7日单量'" :x="echartData.x" :y="echartData.y"></customBarChart>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import CustomBarChart from '@/components/custom-bar-chart.vue';
+import customBarChart from '@/components/custom/custom-bar-chart.vue';
+import bizTurnover from '@/components/biz/biz-turnover.vue';
+import bizCount from '@/components/biz/biz-count.vue';
+import bizSnacksTurnover from '@/components/biz/biz-snacks-turnover.vue';
 import type { BarChartDto } from '@/dto/EchartDto';
 import { onMounted, ref } from 'vue';
 

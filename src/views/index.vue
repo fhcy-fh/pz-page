@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="发财麻将" />
+    <van-nav-bar title="发财麻将" style="background-color: #F56C6C;" />
     <RouterView></RouterView>
     <van-tabbar v-model="active" active-color="#07c160" inactive-color="#000">
       <van-tabbar-item icon="cashier-o" @click="toHome">
