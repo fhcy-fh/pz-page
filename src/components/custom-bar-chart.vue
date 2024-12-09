@@ -26,7 +26,15 @@ const init = (title: string, xData: string[], yData: number[]) => {
   let myChart = echarts.init(chart.value);
   const option = ref({
     title: {
-      text: title
+      text: title,
+      left: 'center',
+      textStyle: {
+        color: '#333',        // 标题颜色
+        fontSize: 15,         // 标题字体大小
+        fontFamily: 'Arial',  // 标题字体族
+        fontWeight: 'bold',   // 标题字体粗细
+        lineHeight: 30,       // 行高
+      },
     },
     tooltip: {
       trigger: 'axis',
