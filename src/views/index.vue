@@ -1,21 +1,13 @@
 <template>
   <div>
-    <van-nav-bar style="background-color: #F56C6C; color: #000">
-        <!-- <template #left>
-            <van-icon name="arrow-left" style="color: #fff;" size="5vw" />
-            <el-text style="color: #fff;" size="large">返回</el-text>
-        </template> -->
-        <template #title>
-            <el-text style="color: #fff;" size="large">麻将登记</el-text>
-        </template>
-    </van-nav-bar>
+    <GlobalNavBar :title="currentRouteTitle" :show-back="currentRouteShowBack"></GlobalNavBar>
     <RouterView v-slot="{ Component }">
-      <transition name="slide" mode="out-in">
+      <transition :name="transitionName" mode="out-in">
         <component :is="Component" />
       </transition>
     </RouterView>
     <van-tabbar v-model="active" active-color="#07c160" inactive-color="#000">
-      <van-tabbar-item icon="cashier-o" @click="toHome">
+      <van-tabbar-item icon="cashier-o" to="/home">
         首页
       </van-tabbar-item>
       <van-tabbar-item icon="edit" to="/record">
@@ -29,26 +21,97 @@
 </template>
 
 <script setup lang="ts">
-import router from '@/router/indes';
-import { ref } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
+import GlobalNavBar from '@/components/global/global-navBar.vue';
+import { useRoute, useRouter, RouterView } from 'vue-router';
+import { ref, computed, watch,  } from 'vue';
 
+// 获取当前路由对象
+const route = useRoute();
+// 获取路由器实例
+const router = useRouter();
+const currentRouteTitle = computed(() => {
+  return route.meta?.title as string || '发财棋牌';
+});
+const currentRouteShowBack = computed(() => {
+  return route.meta?.showBack as boolean || false;
+});
+
+const currentRoute = ref<any>(route);
+const previousRoute = ref<any>(null);
+
+watch(route, (to, from) => {
+  previousRoute.value = { ...currentRoute.value };
+  currentRoute.value = { ...route };
+}, { immediate: true });
+
+const transitionName = computed(() => {
+  if (previousRoute.value) {
+    if (previousRoute.value.meta.index > currentRoute.value.meta.index) {
+      return 'slide-right';
+    } else {
+      return 'slide-left';
+    }
+  }
+  return 'slide-right';
+});
+
+// 菜单切换
 const active = ref(0)
-
-const toHome = () => {
-  router.push('/');
-  active.value = 0;
-}
-const toRecord = () => {
-  router.push('/record');
-  active.value = 1;
-}
-const toSnacks = () => {
-  router.push('/snacks');
-  active.value = 2;
-}
 
 </script>
 
 <style scoped>
+
+/* 新页面从右侧进入 */
+.slide-right-enter-from {
+  transform: translateX(100%); /* 从右侧完全移出 */
+  opacity: 0; /* 完全透明 */
+}
+/* 过渡 */
+.slide-right-enter-active {
+  transition: transform 0.5s, opacity 0.5s;
+}
+/* 新页面进入后停留在原位 */
+.slide-right-enter-to {
+  transform: translateX(0); /* 滑动到屏幕中央 */
+  opacity: 1; /* 完全可见 */
+}
+/* 旧页面从屏幕中央向左侧滑出 */
+.slide-right-leave-from {
+  transform: translateX(0); /* 初始位置在屏幕中央 */
+  opacity: 1; /* 完全可见 */
+}
+/* 过渡 */
+.slide-right-leave-active {
+  transition: transform 0.5s, opacity 0.5s;
+}
+/* 旧页面滑出到左侧并消失 */
+.slide-right-leave-to {
+  transform: translateX(-100%); /* 滑动到左侧完全移出 */
+  opacity: 0; /* 完全透明 */
+}
+
+.slide-left-enter-from {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.slide-left-enter-active {
+  transition: transform 0.5s, opacity 0.5s;
+}
+.slide-left-enter-to {
+  transform: translateX(0);
+  opacity: 1;
+}
+.slide-left-leave-from {
+  transform: translateX(0);
+  opacity: 1;
+}
+.slide-left-leave-active {
+  transition: transform 0.5s, opacity 0.5s;
+}
+.slide-left-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
 </style>
