@@ -10,7 +10,6 @@
         </van-grid>
       </van-collapse-item>
     </van-collapse>
-    <RouterView></RouterView>
   </div>
 </template>
 
