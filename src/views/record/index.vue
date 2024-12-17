@@ -1,11 +1,11 @@
 <template>
   <div>
-    <van-collapse v-model="activeName">
-      <van-collapse-item :title="shop.shopName" :name="shop.shopCode" v-for="shop in shopList">
+    <van-collapse v-model="activeList">
+      <van-collapse-item :title="shop.name" :name="shop.code" v-for="shop in shopList">
         <van-grid square column-num="3" :gutter='10'>
           <van-grid-item @click="thisShowDetail(room)" v-for="room in shop.roomList">
-            <van-icon :name="image" size="10vw"/>
-            <b>{{ room.roomName }}{{ room.usedName }}</b>
+            <van-icon :name="room.status == 0 ? images_1 : images_2" size="10vw"/>
+            <b>{{ room.name }}({{ room.status == 0 ? '空闲' : '' }})</b>
           </van-grid-item>
         </van-grid>
       </van-collapse-item>
@@ -21,66 +21,22 @@
 import {ref, onMounted} from 'vue';
 import images_1 from '@/assets/images/1.png'
 import images_2 from '@/assets/images/2.png'
+import {apiGetShopList} from "@/api/shop/ApiShop.ts";
+import type {ShopDto} from "@/dto/ShopDto.ts";
 
 const thisShowDetailFlag = ref(false);
-const activeName = ref(['1', '2'])
+const activeList = ref([1, 2])
 
-const image = ref(images_1)
-
-const shopList = ref([
-  {
-    shopCode: '1',
-    shopName: '11层',
-    roomList: [
-      {
-        roomName: '1号房',
-        used: false,
-        usedName: '空闲'
-      },
-      {
-        roomName: '2号房',
-        used: false,
-        usedName: '空闲'
-      },
-      {
-        roomName: '3号房',
-        used: false,
-        usedName: '空闲'
-      },
-      {
-        roomName: '4号房',
-        used: false,
-        usedName: '空闲'
-      },
-      {
-        roomName: '5号房',
-        used: false,
-        usedName: '空闲'
-      }
-    ]
-  },
-  {
-    shopCode: '2',
-    shopName: '12层',
-    roomList: [
-      {
-        roomName: '1号房',
-        used: false,
-        usedName: '空闲'
-      },
-      {
-        roomName: '2号房',
-        used: false,
-        usedName: '空闲'
-      }
-    ]
-  }
-]);
+const shopList = ref<ShopDto>([]);
 
 const thisShowDetail = (room: any) => {
   thisShowDetailFlag.value = true
-  image.value = images_2
 }
+onMounted(async () => {
+  const { data } = await apiGetShopList();
+  shopList.value = data;
+  activeList.value = shopList.value.map(shop => shop.code);
+})
 </script>
 
 <style scoped></style>
