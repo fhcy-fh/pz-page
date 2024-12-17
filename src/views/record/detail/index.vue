@@ -1,5 +1,5 @@
 <template>
-    <div>jskdjfakjd</div>
+    
 </template>
 
 <script setup lang="ts">

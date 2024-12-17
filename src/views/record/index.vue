@@ -1,22 +1,31 @@
 <template>
   <div>
-    <van-collapse v-model="activeName" @change="change">
+    <van-collapse v-model="activeName">
       <van-collapse-item :title="shop.shopName" :name="shop.shopCode" v-for="shop in shopList">
         <van-grid square column-num="3" :gutter='10'>
-          <van-grid-item @click="toDetail(room)" v-for="room in shop.roomList">
-              <van-icon :name="images_1" size="10vw" />
-              <b>{{ room.roomName }}{{ room.usedName }}</b>
+          <van-grid-item @click="thisShowDetail(room)" v-for="room in shop.roomList">
+            <van-icon :name="image" size="10vw"/>
+            <b>{{ room.roomName }}{{ room.usedName }}</b>
           </van-grid-item>
         </van-grid>
       </van-collapse-item>
     </van-collapse>
+
+    <van-action-sheet v-model:show="thisShowDetailFlag" title="房间登记">
+      <div class="content">内容</div>
+    </van-action-sheet>
   </div>
 </template>
 
 <script setup lang="ts">
-import router from '@/router/indes';
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import images_1 from '@/assets/images/1.png'
+import images_2 from '@/assets/images/2.png'
+
+const thisShowDetailFlag = ref(false);
+const activeName = ref(['1', '2'])
+
+const image = ref(images_1)
 
 const shopList = ref([
   {
@@ -68,21 +77,9 @@ const shopList = ref([
   }
 ]);
 
-
-const activeName = ref(['1', '2'])
-const show = ref(false)
-
-const change = (e: any) => {
-  activeName.value = e.detail
-
-  console.log(activeName.value)
-}
-
-const toDetail = (room: any) => {
-  router.push('/record/detail');
-}
-const close = () => {
-  show.value = false
+const thisShowDetail = (room: any) => {
+  thisShowDetailFlag.value = true
+  image.value = images_2
 }
 </script>
 
