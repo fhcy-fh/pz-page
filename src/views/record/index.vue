@@ -15,38 +15,29 @@
         </van-collapse-item>
       </van-collapse>
     </div>
-
-    <van-action-sheet v-model:show="thisShowDetailFlag" :title="thisShowDetailTitle" style="height: 90vh">
-      <van-form @submit="onSubmit">
-        <van-cell-group inset>
-        </van-cell-group>
-        <div style="margin: 16px;">
-          <van-button round block type="primary" native-type="submit">
-            提交
-          </van-button>
-        </div>
-      </van-form>
-    </van-action-sheet>
   </div>
 </template>
 
 <script setup lang="ts">
+import router from '@/router/indes';
 import {ref, onMounted} from 'vue';
 import images_1 from '@/assets/images/1.png'
 import images_2 from '@/assets/images/2.png'
 import {apiGetShopList} from "@/api/shop/ApiShop.ts";
 import type {ShopDto} from "@/dto/ShopDto.ts";
 
-const thisShowDetailFlag = ref(false);
-const thisShowDetailTitle = ref('');
 const shopLoading = ref(true)
 const activeList = ref([1, 2])
 
 const shopList = ref<ShopDto>([]);
 
 const thisShowDetail = (room: any) => {
-  thisShowDetailFlag.value = true
-  thisShowDetailTitle.value = room.name + '-登记'
+  router.push({
+    path: '/record/detail',
+    query: {
+      roomCode: room.code
+    }
+  });
 }
 onMounted(async () => {
   const {data} = await apiGetShopList();
