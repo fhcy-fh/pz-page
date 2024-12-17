@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="shopLoading" class="loading-container">
-      <van-loading size="8vh" />
+      <van-loading size="8vh"/>
     </div>
     <div v-else>
       <van-collapse v-model="activeList">
@@ -16,8 +16,16 @@
       </van-collapse>
     </div>
 
-    <van-action-sheet v-model:show="thisShowDetailFlag" title="房间登记">
-      <div class="content">内容</div>
+    <van-action-sheet v-model:show="thisShowDetailFlag" :title="thisShowDetailTitle" style="height: 90vh">
+      <van-form @submit="onSubmit">
+        <van-cell-group inset>
+        </van-cell-group>
+        <div style="margin: 16px;">
+          <van-button round block type="primary" native-type="submit">
+            提交
+          </van-button>
+        </div>
+      </van-form>
     </van-action-sheet>
   </div>
 </template>
@@ -30,6 +38,7 @@ import {apiGetShopList} from "@/api/shop/ApiShop.ts";
 import type {ShopDto} from "@/dto/ShopDto.ts";
 
 const thisShowDetailFlag = ref(false);
+const thisShowDetailTitle = ref('');
 const shopLoading = ref(true)
 const activeList = ref([1, 2])
 
@@ -37,9 +46,10 @@ const shopList = ref<ShopDto>([]);
 
 const thisShowDetail = (room: any) => {
   thisShowDetailFlag.value = true
+  thisShowDetailTitle.value = room.name + '-登记'
 }
 onMounted(async () => {
-  const { data } = await apiGetShopList();
+  const {data} = await apiGetShopList();
   shopList.value = data;
   activeList.value = shopList.value.map(shop => shop.code);
   shopLoading.value = false
