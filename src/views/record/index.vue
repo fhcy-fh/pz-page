@@ -1,15 +1,20 @@
 <template>
   <div>
-    <van-collapse v-model="activeList">
-      <van-collapse-item :title="shop.name" :name="shop.code" v-for="shop in shopList">
-        <van-grid square column-num="3" :gutter='10'>
-          <van-grid-item @click="thisShowDetail(room)" v-for="room in shop.roomList">
-            <van-icon :name="room.status == 0 ? images_1 : images_2" size="10vw"/>
-            <b>{{ room.name }}({{ room.status == 0 ? '空闲' : '' }})</b>
-          </van-grid-item>
-        </van-grid>
-      </van-collapse-item>
-    </van-collapse>
+    <div v-if="shopLoading" class="loading-container">
+      <van-loading size="8vh" />
+    </div>
+    <div v-else>
+      <van-collapse v-model="activeList">
+        <van-collapse-item :title="shop.name" :name="shop.code" v-for="shop in shopList">
+          <van-grid square column-num="3" :gutter='10'>
+            <van-grid-item @click="thisShowDetail(room)" v-for="room in shop.roomList">
+              <van-icon :name="room.status == 0 ? images_1 : images_2" size="10vw"/>
+              <b>{{ room.name }}({{ room.status == 0 ? '空闲' : '' }})</b>
+            </van-grid-item>
+          </van-grid>
+        </van-collapse-item>
+      </van-collapse>
+    </div>
 
     <van-action-sheet v-model:show="thisShowDetailFlag" title="房间登记">
       <div class="content">内容</div>
@@ -25,6 +30,7 @@ import {apiGetShopList} from "@/api/shop/ApiShop.ts";
 import type {ShopDto} from "@/dto/ShopDto.ts";
 
 const thisShowDetailFlag = ref(false);
+const shopLoading = ref(true)
 const activeList = ref([1, 2])
 
 const shopList = ref<ShopDto>([]);
@@ -36,7 +42,15 @@ onMounted(async () => {
   const { data } = await apiGetShopList();
   shopList.value = data;
   activeList.value = shopList.value.map(shop => shop.code);
+  shopLoading.value = false
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+</style>
