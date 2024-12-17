@@ -4,7 +4,6 @@ import Home from '@/views/home/index.vue'
 import Snacks from '@/views/snacks/index.vue'
 import RecordDetail from '@/views/record/detail/index.vue'
 import index from '@/views/index.vue'
-import { number } from 'echarts'
 
 const routes = [
     {
@@ -17,6 +16,16 @@ const routes = [
             tabbarIndex: 0
         },
         children: [
+            {
+                path: '/',
+                component: Home,
+                meta: {
+                    title: '发财麻将',
+                    showBack: false,
+                    index: 89,
+                    tabbarIndex: 0
+                }
+            },
             {
                 path: '/home',
                 component: Home,
