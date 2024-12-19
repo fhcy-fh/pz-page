@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import Record from '@/views/record/index.vue'
 import Home from '@/views/home/index.vue'
 import Snacks from '@/views/snacks/index.vue'
+import Exchange from '@/views/exchange/index.vue'
 import RecordDetail from '@/views/record/detail/index.vue'
 import index from '@/views/index.vue'
 
@@ -57,15 +58,25 @@ const routes = [
                 }
             },
             {
+                path: '/exchange',
+                component: Exchange,
+                meta: {
+                    title: '兑换',
+                    showBack: false,
+                    index: 69,
+                    tabbarIndex: 2
+                }
+            },
+            {
                 path: '/snacks',
                 component: Snacks,
                 meta: {
                     title: '零食',
                     showBack: false,
-                    index: 69,
-                    tabbarIndex: 2
+                    index: 59,
+                    tabbarIndex: 3
                 }
-            }
+            },
         ]
     },
 

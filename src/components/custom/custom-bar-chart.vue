@@ -1,5 +1,5 @@
 <template>
-  <div ref="chart" style="width: 100%; height: 270px"></div>
+  <div ref="chart" style="width: 100%; height: 30vh"></div>
 </template>
 <script setup lang="ts">
 import { ref, watch } from 'vue';

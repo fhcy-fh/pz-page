@@ -46,7 +46,7 @@
 .content {
   display: inline-flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 2vw;
   /* 两个文本之间的间距 */
 }
 </style>

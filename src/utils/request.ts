@@ -4,56 +4,53 @@ import { tansParams } from '@/utils/fhcy';
 import cache from '@/plugins/cache';
 import { HttpStatus } from '@/enums/RespEnum';
 import { errorCode } from '@/utils/errorCode';
+import {showFailToast} from 'vant';
 
+// 设置默认请求头
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
+
 // 创建 axios 实例
 const service = axios.create({
     baseURL: import.meta.env.VITE_APP_BASE_API,
-    timeout: 50000
+    timeout: 60000
 });
 
 // 请求拦截器
 service.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
-
         // 是否需要防止数据重复提交
         const isRepeatSubmit = config.headers?.repeatSubmit === false;
 
-        // get请求映射params参数
+        // 处理 GET 请求参数
         if (config.method === 'get' && config.params) {
-            let url = config.url + '?' + tansParams(config.params);
-            url = url.slice(0, -1);
+            config.url += `?${tansParams(config.params)}`;
             config.params = {};
-            config.url = url;
         }
 
-        if (!isRepeatSubmit && (config.method === 'post' || config.method === 'put')) {
+        // 防止重复提交
+        if (!isRepeatSubmit && ['post', 'put'].includes(config.method)) {
             const requestObj = {
                 url: config.url,
                 data: typeof config.data === 'object' ? JSON.stringify(config.data) : config.data,
-                time: new Date().getTime()
+                time: Date.now()
             };
             const sessionObj = cache.session.getJSON('sessionObj');
-            if (sessionObj === undefined || sessionObj === null || sessionObj === '') {
-                cache.session.setJSON('sessionObj', requestObj);
+
+            if (sessionObj && requestObj.data === sessionObj.data &&
+                requestObj.time - sessionObj.time < 500 && requestObj.url === sessionObj.url) {
+                const message = '数据正在处理，请勿重复提交';
+                console.warn(`[${requestObj.url}]: ${message}`);
+                return Promise.reject(new Error(message));
             } else {
-                const s_url = sessionObj.url; // 请求地址
-                const s_data = sessionObj.data; // 请求数据
-                const s_time = sessionObj.time; // 请求时间
-                const interval = 500; // 间隔时间(ms)，小于此时间视为重复提交
-                if (s_data === requestObj.data && requestObj.time - s_time < interval && s_url === requestObj.url) {
-                    const message = '数据正在处理，请勿重复提交';
-                    console.warn(`[${s_url}]: ` + message);
-                    return Promise.reject(new Error(message));
-                } else {
-                    cache.session.setJSON('sessionObj', requestObj);
-                }
+                cache.session.setJSON('sessionObj', requestObj);
             }
         }
-        // FormData数据去请求头Content-Type
+
+        // 处理 FormData 数据
         if (config.data instanceof FormData) {
             delete config.headers['Content-Type'];
         }
+
         return config;
     },
     (error: any) => {
@@ -64,38 +61,44 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
     (res: AxiosResponse) => {
-        // 未设置状态码则默认成功状态
         const code = res.data.code || HttpStatus.SUCCESS;
-        // 获取错误信息
         const msg = errorCode[code] || res.data.msg || errorCode['default'];
-        // 二进制数据则直接返回
+
+        // 二进制数据直接返回
         if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
             return res.data;
         }
-        if (code === 401) {
-            return Promise.reject('无效的会话，或者会话已过期，请重新登录。');
-        } else if (code === HttpStatus.SERVER_ERROR) {
-            ElMessage({ message: msg, type: 'error' });
-            return Promise.reject(new Error(msg));
-        } else if (code === HttpStatus.WARN) {
-            ElMessage({ message: msg, type: 'warning' });
-            return Promise.reject(new Error(msg));
-        } else if (code !== HttpStatus.SUCCESS) {
-            ElNotification.error({ title: msg });
-            return Promise.reject('error');
-        } else {
-            return Promise.resolve(res.data);
+
+        switch (code) {
+            case 401:
+                return Promise.reject('无效的会话，或者会话已过期，请重新登录。');
+            case HttpStatus.SERVER_ERROR:
+                showFailToast(msg);
+                return Promise.reject(new Error(msg));
+            case HttpStatus.WARN:
+                showFailToast(msg);
+                return Promise.reject(new Error(msg));
+            case HttpStatus.SUCCESS:
+                return Promise.resolve(res.data);
+            default:
+                showFailToast(msg);
+                return Promise.reject('error');
         }
     },
     (error: any) => {
-        let { message } = error;
-        if (message == 'Network Error') {
+        let message = error.message;
+        // 特殊处理 net::ERR_CONNECTION_REFUSED
+        if (error.code === 'ECONNREFUSED') {
+            message = '无法连接到服务器，请检查网络连接或联系管理员。';
+            console.error('Connection refused:', error.config.url);
+        } else if (message === 'Network Error') {
             message = '后端接口连接异常';
         } else if (message.includes('timeout')) {
             message = '系统接口请求超时';
         } else if (message.includes('Request failed with status code')) {
-            message = '系统接口' + message.substr(message.length - 3) + '异常';
+            message = `系统接口${message.substring(message.length - 3)}异常`;
         }
+        showFailToast(message);
         return Promise.reject(error);
     }
 );

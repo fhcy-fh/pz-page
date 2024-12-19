@@ -31,20 +31,4 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.card-container {
-  display: flex;
-  align-items: center;
-  /* 垂直居中 */
-  justify-content: center;
-  /* 水平居中 */
-  text-align: center;
-  /* 文本居中 */
-}
-
-.content {
-  display: inline-flex;
-  flex-direction: column;
-  gap: 8px;
-  /* 两个文本之间的间距 */
-}
 </style>
