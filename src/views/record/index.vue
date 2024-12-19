@@ -23,7 +23,7 @@ import router from '@/router/indes';
 import {ref, onMounted} from 'vue';
 import images_1 from '@/assets/images/1.png'
 import images_2 from '@/assets/images/2.png'
-import {apiGetShopList} from "@/api/shop/ApiShop.ts";
+import {apiShopGetShopList} from "@/api/shop/ApiShop.ts";
 import type {ShopDto} from "@/dto/ShopDto.ts";
 
 const shopLoading = ref(true)
@@ -40,7 +40,7 @@ const thisShowDetail = (room: any) => {
   });
 }
 onMounted(async () => {
-  const {data} = await apiGetShopList();
+  const {data} = await apiShopGetShopList();
   shopList.value = data;
   activeList.value = shopList.value.map(shop => shop.code);
   shopLoading.value = false

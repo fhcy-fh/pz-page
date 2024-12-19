@@ -9,13 +9,13 @@
       </RouterView>
     </div>
     <van-tabbar :fixed='false' v-model="active" active-color="#07c160" inactive-color="#000">
-      <van-tabbar-item icon="cashier-o" to="home">
+      <van-tabbar-item icon="cashier-o" to="/home">
         首页
       </van-tabbar-item>
-      <van-tabbar-item icon="edit" to="record">
+      <van-tabbar-item icon="edit" to="/record">
         登记
       </van-tabbar-item>
-      <van-tabbar-item icon="shop-o" to="snacks">
+      <van-tabbar-item icon="shop-o" to="/snacks">
         零食
       </van-tabbar-item>
     </van-tabbar>
@@ -71,6 +71,7 @@ const transitionName = computed(() => {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: #f7f8fa;
 }
 
 .content {

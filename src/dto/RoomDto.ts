@@ -5,3 +5,7 @@ export interface RoomDto {
     status: number;
     enable: boolean;
 }
+
+export interface RoomDetailDto extends RoomDto{
+    shopName: string;
+}
