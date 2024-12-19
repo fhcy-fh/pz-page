@@ -9,7 +9,7 @@
           <van-grid square column-num="3" :gutter='10'>
             <van-grid-item @click="thisShowDetail(room)" v-for="room in shop.roomList">
               <van-icon :name="room.status == 0 ? images_1 : images_2" size="10vw"/>
-              <b>{{ room.name }}({{ room.status == 0 ? '空闲' : '' }})</b>
+              <b>{{ room.name }}{{ room.status == 0 ? '(空闲)' : '' }}</b>
             </van-grid-item>
           </van-grid>
         </van-collapse-item>

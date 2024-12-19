@@ -1,7 +1,7 @@
 <template>
   <div style="padding-left: 3vw; padding-right: 3vw; padding-top: 2vw">
     <el-card>
-      <van-form @submit="onSubmit">
+      <van-form @submit="thisFuncSaveOrder">
         <van-field
             v-model="roomDetailDto.shopName"
             readonly
@@ -75,14 +75,18 @@
 </template>
 
 <script setup lang="ts">
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {apiRoomGetDetail} from "@/api/shop/ApiRoom.ts";
 import type {RoomDetailDto} from "@/dto/RoomDto.ts";
 import type {OrderSaveDto} from "@/dto/OrderDto.ts";
 import {ConstOrderType} from "@/consts/Consts.ts";
+import {apiOrderSave} from "@/api/shop/ApiOrder.ts";
+import { showLoadingToast } from 'vant';
 // 获取路由器实例
 const route = useRoute()
+// 获取路由器实例
+const router = useRouter();
 // 变量定义
 const checked = ref([]);
 const roomDetailDto = ref<RoomDetailDto>({
@@ -96,7 +100,7 @@ const roomDetailDto = ref<RoomDetailDto>({
 
 const orderSaveDto = ref<OrderSaveDto>({
   roomCode: '',
-  type: '',
+  type: ConstOrderType[1].value,
   useAir: false,
   useFire: false,
   amount: ConstOrderType[1].amount,
@@ -120,6 +124,20 @@ const thisFuncConfirmTypeSelect = ({selectedValues, selectedOptions}) => {
   thisShowTypeSelect.value = false
   orderSaveDto.value.amount = ConstOrderType.find(item => item.value === orderSaveDto.value.type)?.amount;
 };
+
+const thisFuncSaveOrder = async () => {
+  const loadingToast = showLoadingToast({
+    message: '保存中...',
+    forbidClick: true,
+  });
+  try {
+    const {data} = await apiOrderSave(orderSaveDto.value)
+    loadingToast.close()
+    router.back()
+  } catch (error) {
+    loadingToast.clear()
+  }
+}
 
 onMounted(async () => {
   const {data} = await apiRoomGetDetail(route.query.roomCode)

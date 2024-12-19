@@ -96,7 +96,6 @@ service.interceptors.response.use(
         } else if (message.includes('Request failed with status code')) {
             message = '系统接口' + message.substr(message.length - 3) + '异常';
         }
-        ElMessage({ message: message, type: 'error', duration: 5 * 1000 });
         return Promise.reject(error);
     }
 );
