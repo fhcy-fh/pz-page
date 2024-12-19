@@ -11,9 +11,9 @@
       />
       <van-popup v-model:show="thisShowSelectPayInType" destroy-on-close position="bottom">
         <van-picker
-            :columns="PayType"
+            :columns="thisExchangeGetEnableConfigList"
             @confirm="thisFuncSelectPayInTypeConfirm"
-            @cancel="showPicker = false"
+            @cancel="thisShowSelectPayInType = false"
         />
       </van-popup>
       <van-field
@@ -31,9 +31,9 @@
       />
       <van-popup v-model:show="thisShowSelectPayOutType" destroy-on-close position="bottom">
         <van-picker
-            :columns="PayType"
+            :columns="thisExchangeGetEnableConfigList"
             @confirm="thisFuncSelectPayOutTypeConfirm"
-            @cancel="showPicker = false"
+            @cancel="thisShowSelectPayInType = false"
         />
       </van-popup>
       <van-field
@@ -61,23 +61,28 @@
 
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
-import {PayType} from "@/consts/Consts.ts";
 import type {ExchangeSaveDto} from "@/dto/ExchangeDto.ts";
 import {Toast} from "vant";
-import {apiExchangeSave} from "@/api/shop/ApiExchange.ts";
+import {apiExchangeGetEnableConfig, apiExchangeSave} from "@/api/shop/ApiExchange.ts";
+import type {SelectDto} from "@/dto/SelectDto.ts";
 
 // 变量区
-const thisShowSelectPayInType = ref(false)
-const thisShowSelectPayOutType = ref(false)
-const thisSelectPayInTypeName = ref('')
-const thisSelectPayOutTypeName = ref('')
+const thisShowSelectPayInType = ref(false);
+const thisShowSelectPayOutType = ref(false);
+const thisSelectPayInTypeName = ref('');
+const thisSelectPayOutTypeName = ref('');
+const thisExchangeGetEnableConfigList = ref<SelectDto>([{
+  text: '',
+  value: null
+}]);
 const thisExchangeSaveDto = ref<ExchangeSaveDto>({
   inType: null,
   inAmount: null,
   outType: null,
   outAmount: null,
-})
+});
 
+// 方法区
 const thisFuncSelectPayInTypeConfirm = ({selectedValues, selectedOptions}) => {
   thisExchangeSaveDto.value.inType = selectedOptions[0]?.value;
   thisSelectPayInTypeName.value = selectedOptions[0]?.text;
@@ -95,6 +100,10 @@ const thisFuncSave = async () => {
     Toast.success('保存成功')
   }
 }
+onMounted(async () => {
+  const {data} = await apiExchangeGetEnableConfig()
+  thisExchangeGetEnableConfigList.value = data
+})
 </script>
 
 <style scoped>

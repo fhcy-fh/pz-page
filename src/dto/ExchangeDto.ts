@@ -10,3 +10,9 @@ export interface ExchangeConfigDto {
     name: string,
     enable: boolean
 }
+export interface ExchangeTotalDto {
+    configId: number,
+    configName: string,
+    inAmount: number
+    outAmount: number
+}

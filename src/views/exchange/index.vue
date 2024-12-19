@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
 import Item from '@/views/exchange/item/index.vue'
 import Detail from '@/views/exchange/detail/index.vue'
 import Config from '@/views/exchange/config/index.vue'
