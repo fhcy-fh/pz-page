@@ -5,28 +5,28 @@ import type {SelectDto} from "@/dto/SelectDto.ts";
 
 export const apiExchangeGet = (): AxiosPromise<ExchangeTotalDto> => {
     return request({
-        url: 'http://localhost:9801/pzfc/exchange/get',
+        url: '/exchange/get',
         method: 'get'
     });
 };
 
 export const apiExchangeGetAllConfig = (): AxiosPromise<ExchangeConfigDto> => {
     return request({
-        url: 'http://localhost:9801/pzfc/exchange/getAllConfig',
+        url: '/exchange/getAllConfig',
         method: 'get'
     });
 };
 
 export const apiExchangeGetEnableConfig = (): AxiosPromise<SelectDto> => {
     return request({
-        url: 'http://localhost:9801/pzfc/exchange/getEnableConfig',
+        url: '/exchange/getEnableConfig',
         method: 'get'
     });
 };
 
 export const apiExchangeSaveConfig = (saveDto: ExchangeConfigDto): AxiosPromise<string> => {
     return request({
-        url: 'http://localhost:9801/pzfc/exchange/saveConfig',
+        url: '/exchange/saveConfig',
         method: 'post',
         data: saveDto
     });
@@ -34,7 +34,7 @@ export const apiExchangeSaveConfig = (saveDto: ExchangeConfigDto): AxiosPromise<
 
 export const apiExchangeSave = (saveDto: ExchangeSaveDto): AxiosPromise<string> => {
     return request({
-        url: 'http://localhost:9801/pzfc/exchange/save',
+        url: '/exchange/save',
         method: 'post',
         data: saveDto
     });

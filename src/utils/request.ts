@@ -9,6 +9,8 @@ import {showFailToast} from 'vant';
 // 设置默认请求头
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
 
+console.log('VITE_APP_BASE_API:', import.meta.env.VITE_APP_BASE_API);
+
 // 创建 axios 实例
 const service = axios.create({
     baseURL: import.meta.env.VITE_APP_BASE_API,

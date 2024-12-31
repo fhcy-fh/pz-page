@@ -25,6 +25,7 @@ import images_1 from '@/assets/images/1.png'
 import images_2 from '@/assets/images/2.png'
 import {apiShopGetShopList} from "@/api/shop/ApiShop.ts";
 import type {ShopDto} from "@/dto/ShopDto.ts";
+import {RoomStatus} from "@/enums/RoomStatusEnum.ts";
 
 const shopLoading = ref(true)
 const activeList = ref([1, 2])
@@ -32,12 +33,14 @@ const activeList = ref([1, 2])
 const shopList = ref<ShopDto>([]);
 
 const thisShowDetail = (room: any) => {
-  router.push({
-    path: '/record/detail',
-    query: {
-      roomCode: room.code
-    }
-  });
+  if (room.status == RoomStatus.status_0) {
+    router.push({
+      path: '/record/detail',
+      query: {
+        roomCode: room.code
+      }
+    });
+  }
 }
 onMounted(async () => {
   const {data} = await apiShopGetShopList();

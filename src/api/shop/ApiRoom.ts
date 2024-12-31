@@ -4,7 +4,7 @@ import type {RoomDetailDto} from "@/dto/RoomDto.ts";
 
 export const apiRoomGetDetail = (code: string): AxiosPromise<RoomDetailDto> => {
     return request({
-        url: 'http://localhost:9801/pzfc/room/getDetail',
+        url: '/room/getDetail',
         method: 'get',
         params: {
             code: code
