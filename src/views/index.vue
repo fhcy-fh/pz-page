@@ -12,12 +12,6 @@
       <van-tabbar-item icon="cashier-o" to="/home">
         首页
       </van-tabbar-item>
-      <van-tabbar-item icon="edit" to="/record">
-        登记
-      </van-tabbar-item>
-      <van-tabbar-item icon="after-sale" to="/exchange">
-        兑换
-      </van-tabbar-item>
       <van-tabbar-item icon="shop-o" to="/snacks">
         零食
       </van-tabbar-item>

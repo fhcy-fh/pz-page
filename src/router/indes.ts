@@ -1,9 +1,6 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
-import Record from '@/views/record/index.vue'
 import Home from '@/views/home/index.vue'
 import Snacks from '@/views/snacks/index.vue'
-import Exchange from '@/views/exchange/index.vue'
-import RecordDetail from '@/views/record/detail/index.vue'
 import index from '@/views/index.vue'
 
 const routes = [
@@ -38,43 +35,13 @@ const routes = [
                 }
             },
             {
-                path: '/record',
-                component: Record,
-                meta: {
-                    title: '麻将登记',
-                    showBack: false,
-                    index: 79,
-                    tabbarIndex: 1
-                }
-            },
-            {
-                path: '/record/detail',
-                component: RecordDetail,
-                meta: {
-                    title: '麻将登记',
-                    showBack: true,
-                    index: 78,
-                    tabbarIndex: 1
-                }
-            },
-            {
-                path: '/exchange',
-                component: Exchange,
-                meta: {
-                    title: '兑换',
-                    showBack: false,
-                    index: 69,
-                    tabbarIndex: 2
-                }
-            },
-            {
                 path: '/snacks',
                 component: Snacks,
                 meta: {
                     title: '零食',
                     showBack: false,
-                    index: 59,
-                    tabbarIndex: 3
+                    index: 79,
+                    tabbarIndex: 1
                 }
             },
         ]
