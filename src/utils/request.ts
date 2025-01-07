@@ -30,7 +30,7 @@ service.interceptors.request.use(
         }
 
         // 防止重复提交
-        if (!isRepeatSubmit && ['post', 'put'].includes(config.method)) {
+        if (!isRepeatSubmit && ['post', 'put'].includes(<any>config.method)) {
             const requestObj = {
                 url: config.url,
                 data: typeof config.data === 'object' ? JSON.stringify(config.data) : config.data,
