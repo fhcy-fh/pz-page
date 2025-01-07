@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import Home from '@/views/home/index.vue'
 import Snacks from '@/views/snacks/index.vue'
 import User from '@/views/user/index.vue'
+import Config from '@/views/user/config/index.vue'
 import index from '@/views/index.vue'
 
 const routes = [
@@ -49,12 +50,22 @@ const routes = [
                 path: '/user',
                 component: User,
                 meta: {
-                    title: '零食',
+                    title: '个人中心',
                     showBack: false,
                     index: 69,
-                    tabbarIndex: 1
+                    tabbarIndex: 2
                 }
             },
+            {
+                path: '/user/config',
+                component: Config,
+                meta: {
+                    title: '基础配置',
+                    showBack: true,
+                    index: 68,
+                    tabbarIndex: 2
+                },
+            }
         ]
     },
 
