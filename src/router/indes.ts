@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import Home from '@/views/home/index.vue'
 import Snacks from '@/views/snacks/index.vue'
+import User from '@/views/user/index.vue'
 import index from '@/views/index.vue'
 
 const routes = [
@@ -41,6 +42,16 @@ const routes = [
                     title: '零食',
                     showBack: false,
                     index: 79,
+                    tabbarIndex: 1
+                }
+            },
+            {
+                path: '/user',
+                component: User,
+                meta: {
+                    title: '零食',
+                    showBack: false,
+                    index: 69,
                     tabbarIndex: 1
                 }
             },

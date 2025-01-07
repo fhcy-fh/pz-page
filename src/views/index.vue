@@ -15,6 +15,9 @@
       <van-tabbar-item icon="shop-o" to="/snacks">
         零食
       </van-tabbar-item>
+      <van-tabbar-item icon="user-o" to="/user">
+        我的
+      </van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
