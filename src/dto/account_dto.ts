@@ -1,16 +1,18 @@
 export interface AccountDto {
     code: string;
     name: string;
-    last_time: string;
-    last_amount: number;
+    lastTime: string;
+    lastAmount: number;
 }
 
 export interface AccountSaveDto {
     name: string;
+    lastAmount: number;
 }
 
 export interface AccountUpdateDto {
     code: string;
     name: string;
+    lastAmount: number;
 }
 

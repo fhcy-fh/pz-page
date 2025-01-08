@@ -2,9 +2,9 @@
   <div style="margin-top: 1vh; height: 100%; background-color: #fff">
     <van-pull-refresh :model-value="this_loading_get_all" @refresh="this_func_get_all" style="height: 100%">
       <van-swipe-cell v-for="item in this_account_list">
-        <van-cell :title="item.name" :value="item.last_amount" @click="this_func_show_update(item)"/>
+        <van-cell :title="item.name" :label="format_yyyy_mm_dd_dd_mm_ss(item.lastTime)" :value="'¥' + item.lastAmount" @click="this_func_show_update(item)"/>
         <template #right>
-          <van-button square type="danger" text="删除"/>
+          <van-button square type="danger" text="删除" style="height: 100%"/>
         </template>
       </van-swipe-cell>
       <van-button
@@ -28,6 +28,11 @@
               label="账户"
               placeholder="账户名"
           />
+          <van-field
+              v-model="this_account_save_dto.lastAmount"
+              label="初始资金"
+              placeholder="初始资金"
+          />
         </van-cell-group>
       </van-dialog>
       <van-dialog
@@ -42,6 +47,11 @@
               label="账户"
               placeholder="账户名"
           />
+          <van-field
+              v-model="this_account_update_dto.lastAmount"
+              label="初始资金"
+              placeholder="初始资金"
+          />
         </van-cell-group>
       </van-dialog>
     </van-pull-refresh>
@@ -54,19 +64,25 @@
 import {ref, onMounted} from 'vue';
 import type {AccountDto, AccountSaveDto, AccountUpdateDto} from "@/dto/account_dto.ts";
 import {api_account_getAll, api_account_save, api_account_update} from "@/api/api_account.ts";
+import {format_yyyy_mm_dd_dd_mm_ss} from "@/utils/date_utils.ts";
 
 const this_show_save = ref(false);
 const this_show_update = ref(false);
 const this_loading_get_all = ref<boolean>(false);
 
 const this_account_list = ref<AccountDto[]>();
-const this_account_save_dto = ref<AccountSaveDto>({
-  name: ''
-});
-const this_account_update_dto = ref<AccountUpdateDto>({
+const this_account_save_dto_init = {
+  name: '',
+  lastAmount: 0
+};
+const this_account_save_dto = ref<AccountSaveDto>(this_account_save_dto_init);
+
+const this_account_update_dto_init = {
   code: '',
-  name: ''
-});
+  name: '',
+  lastAmount: 0
+};
+const this_account_update_dto = ref<AccountUpdateDto>(this_account_update_dto_init);
 
 // 方法区
 const this_func_get_all = async () => {
@@ -77,13 +93,8 @@ const this_func_get_all = async () => {
 }
 
 const this_func_init = async () => {
-  this_account_save_dto.value = {
-    name: ''
-  }
-  this_account_update_dto.value = {
-    code: '',
-    name: ''
-  }
+  this_account_save_dto.value = this_account_save_dto_init
+  this_account_update_dto.value = this_account_update_dto_init
 }
 
 const this_func_show_save = () => {
