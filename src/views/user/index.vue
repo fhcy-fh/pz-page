@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-cell title="基础配置" is-link to="/user/config" />
+    <van-cell title="账号配置" size="large" is-link to="/user/config/account" />
   </div>
 </template>
 

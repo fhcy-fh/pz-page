@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import Home from '@/views/home/index.vue'
 import Snacks from '@/views/snacks/index.vue'
 import User from '@/views/user/index.vue'
-import Config from '@/views/user/config/index.vue'
+import ConfigAccount from '@/views/user/config/account/index.vue'
 import index from '@/views/index.vue'
 
 const routes = [
@@ -57,10 +57,10 @@ const routes = [
                 }
             },
             {
-                path: '/user/config',
-                component: Config,
+                path: '/user/config/account',
+                component: ConfigAccount,
                 meta: {
-                    title: '基础配置',
+                    title: '账号配置',
                     showBack: true,
                     index: 68,
                     tabbarIndex: 2
