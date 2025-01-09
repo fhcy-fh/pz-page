@@ -41,7 +41,7 @@ const routes = [
                 path: '/record/account',
                 component: RecordAccount,
                 meta: {
-                    title: '发财麻将',
+                    title: '每日账户结算',
                     showBack: true,
                     index: 88,
                     tabbarIndex: 0
