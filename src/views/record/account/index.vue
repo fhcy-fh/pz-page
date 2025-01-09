@@ -14,6 +14,8 @@
         close-on-click-overlay>
       <van-cell-group inset>
         <van-field
+            ref="this_focus_amount"
+            type="number"
             v-model="this_account_record_dto.amount"
             label="当前资金"
             placeholder="请输入当前账户金额"
@@ -24,13 +26,14 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
+import {nextTick, onMounted, ref} from 'vue';
 import {format_yyyy_mm_dd_dd_mm_ss} from "@/utils/date_utils.ts";
 import {api_account_getAll, api_account_record} from "@/api/api_account.ts";
 import type {AccountDto, AccountRecordDto} from "@/dto/account_dto.ts";
 
 const this_loading_get_all = ref<boolean>(false);
 const this_show_record = ref(false);
+const this_focus_amount = ref()
 
 const this_account_list = ref<AccountDto[]>();
 const this_account = ref<AccountDto>();
@@ -50,6 +53,12 @@ const this_func_show_record = async (item: AccountDto) => {
   this_show_record.value = true
   this_account.value = item
   this_account_record_dto.value.code = item.code
+  await nextTick();
+  setTimeout(() => {
+    if (this_focus_amount.value) {
+      this_focus_amount.value.focus();
+    }
+  }, 100);
 }
 
 const this_func_record = async () => {
