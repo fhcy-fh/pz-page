@@ -38,7 +38,8 @@ const this_focus_amount = ref()
 const this_account_list = ref<AccountDto[]>();
 const this_account = ref<AccountDto>();
 
-const this_account_record_dto = ref<AccountRecordDto>({code: "", amount: undefined});
+const this_account_record_dto_init = {code: "", amount: undefined}
+const this_account_record_dto = ref<AccountRecordDto>(this_account_record_dto_init);
 
 
 // 方法区
@@ -64,6 +65,7 @@ const this_func_show_record = async (item: AccountDto) => {
 const this_func_record = async () => {
   await api_account_record(this_account_record_dto.value)
   await this_func_get_all()
+  this_account_record_dto.value = this_account_record_dto_init
 }
 
 
