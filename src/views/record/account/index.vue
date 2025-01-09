@@ -38,8 +38,7 @@ const this_focus_amount = ref()
 const this_account_list = ref<AccountDto[]>();
 const this_account = ref<AccountDto>();
 
-const this_account_record_dto_init = {code: "", amount: undefined}
-const this_account_record_dto = ref<AccountRecordDto>(this_account_record_dto_init);
+const this_account_record_dto = ref<AccountRecordDto>({code: "", amount: undefined});
 
 
 // 方法区
@@ -54,6 +53,7 @@ const this_func_show_record = async (item: AccountDto) => {
   this_show_record.value = true
   this_account.value = item
   this_account_record_dto.value.code = item.code
+  this_account_record_dto.value.amount = undefined
   await nextTick();
   setTimeout(() => {
     if (this_focus_amount.value) {
@@ -65,7 +65,6 @@ const this_func_show_record = async (item: AccountDto) => {
 const this_func_record = async () => {
   await api_account_record(this_account_record_dto.value)
   await this_func_get_all()
-  this_account_record_dto.value = this_account_record_dto_init
 }
 
 
