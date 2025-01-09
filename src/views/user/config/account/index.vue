@@ -55,8 +55,6 @@
         </van-cell-group>
       </van-dialog>
     </van-pull-refresh>
-
-
   </div>
 </template>
 

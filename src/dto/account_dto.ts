@@ -13,6 +13,11 @@ export interface AccountSaveDto {
 export interface AccountUpdateDto {
     code: string;
     name: string;
-    lastAmount: number;
+    lastAmount: number | undefined;
+}
+
+export interface AccountRecordDto {
+    code: string;
+    amount: number | undefined;
 }
 

@@ -1,9 +1,10 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+import index from '@/views/index.vue'
 import Home from '@/views/home/index.vue'
 import Snacks from '@/views/snacks/index.vue'
 import User from '@/views/user/index.vue'
 import ConfigAccount from '@/views/user/config/account/index.vue'
-import index from '@/views/index.vue'
+import RecordAccount from '@/views/record/account/index.vue'
 
 const routes = [
     {
@@ -33,6 +34,16 @@ const routes = [
                     title: '发财麻将',
                     showBack: false,
                     index: 89,
+                    tabbarIndex: 0
+                }
+            },
+            {
+                path: '/record/account',
+                component: RecordAccount,
+                meta: {
+                    title: '发财麻将',
+                    showBack: true,
+                    index: 88,
                     tabbarIndex: 0
                 }
             },
