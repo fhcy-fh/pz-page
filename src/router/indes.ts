@@ -5,6 +5,7 @@ import Snacks from '@/views/snacks/index.vue'
 import User from '@/views/user/index.vue'
 import ConfigAccount from '@/views/user/config/account/index.vue'
 import RecordAccount from '@/views/record/account/index.vue'
+import AccountDaily from '@/views/account/daily/index.vue'
 
 const routes = [
     {
@@ -42,6 +43,16 @@ const routes = [
                 component: RecordAccount,
                 meta: {
                     title: '每日账户结算',
+                    showBack: true,
+                    index: 88,
+                    tabbarIndex: 0
+                }
+            },
+            {
+                path: '/account/daily',
+                component: AccountDaily,
+                meta: {
+                    title: '账户明细',
                     showBack: true,
                     index: 88,
                     tabbarIndex: 0

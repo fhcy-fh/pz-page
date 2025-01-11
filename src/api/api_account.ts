@@ -1,6 +1,12 @@
 import request from '@/utils/request';
 import type {AxiosPromise} from 'axios';
-import type {AccountDto, AccountRecordDto, AccountSaveDto, AccountUpdateDto} from "@/dto/account_dto.ts";
+import type {
+    AccountDailyDto,
+    AccountDto,
+    AccountRecordDto,
+    AccountSaveDto,
+    AccountUpdateDto
+} from "@/dto/account_dto.ts";
 
 export const api_account_getAll = (): AxiosPromise<AccountDto[]> => {
     return request({
@@ -27,5 +33,16 @@ export const api_account_record = (req: AccountRecordDto): AxiosPromise => {
         url: '/account/record',
         method: 'post',
         data: req
+    });
+};
+
+export const api_account_daily_get = (accountCode: string, pageNumber: number): AxiosPromise<AccountDailyDto[]> => {
+    return request({
+        url: '/account/daily/get',
+        method: 'get',
+        params: {
+            accountCode: accountCode,
+            pageNumber: pageNumber
+        }
     });
 };

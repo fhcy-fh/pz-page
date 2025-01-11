@@ -6,6 +6,7 @@
     />
     <van-grid direction="horizontal" :column-num="3" :gutter="1" style="margin-top: 1vh;">
       <van-grid-item icon="gold-coin-o" text="账户结算" to="/record/account"/>
+      <van-grid-item icon="gold-coin-o" text="账户明细" to="/account/daily"/>
     </van-grid>
   </div>
 </template>

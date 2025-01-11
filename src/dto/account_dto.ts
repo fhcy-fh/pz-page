@@ -21,3 +21,9 @@ export interface AccountRecordDto {
     amount: number | undefined;
 }
 
+export interface AccountDailyDto {
+    date: string;
+    accountCode: string;
+    amount: number | undefined;
+}
+
