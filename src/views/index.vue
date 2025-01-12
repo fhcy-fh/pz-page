@@ -8,7 +8,7 @@
         </transition>
       </RouterView>
     </div>
-    <van-tabbar :fixed='false' v-model="active" active-color="#07c160" inactive-color="#000">
+    <van-tabbar :fixed='false' v-model="active" active-color="#07c160" inactive-color="#000" style="height: 16vh">
       <van-tabbar-item icon="cashier-o" to="/home">
         首页
       </van-tabbar-item>
