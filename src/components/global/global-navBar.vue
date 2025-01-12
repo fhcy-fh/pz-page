@@ -1,5 +1,5 @@
 <template>
-  <van-nav-bar :style="{ backgroundColor: '#F56C6C', color: '#000' }" @click-left="handleBack">
+  <van-nav-bar :style="{ backgroundColor: '#F56C6C', color: '#000', height: '6vh' }" @click-left="handleBack">
     <template #left v-if="props.showBack">
       <van-icon name="arrow-left" :style="{ color: '#fff' }" size="5vw"/>
       <p style="color: #fff">返回</p>
